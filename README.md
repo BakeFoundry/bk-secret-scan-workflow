@@ -17,7 +17,7 @@ By integrating secret scanning directly into the CI/CD pipeline, we ensure that:
 -   **Actionable**: It tells you the severity (e.g., `CRITICAL`, `HIGH`), so you know what needs immediate attention (revocation and removal).
 
 ### 🕵️‍♂️ For Approvers / Reviewers
--   **Confidence**: You can review code knowing that automated scanners have already checked for common credentials.
+-   **Confidence**: You can review code knowing that automated scanners have already checked for common credentials
 -   **Efficiency**: You don't need to manually hunt for API keys in diffs.
 -   **Gatekeeping**: The PR comment acts as a seal of approval (✅ No Secrets Found) or a warning sign (⚠️ Secrets Detected), helping you decide whether to merge or request changes.
 
