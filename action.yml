@@ -1,0 +1,52 @@
+name: 'Secret Scan'
+description: 'Scans the repository for secrets using Trivy'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Copy Trivy Template
+      shell: bash
+      run: cp ${{ github.action_path }}/.github/trivy-secret.tpl .trivy-secret.tpl
+
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        scanners: 'secret'
+        exit-code: '1'
+        ignore-unfixed: true
+        severity: 'CRITICAL,HIGH'
+        format: 'template'
+        template: '@.trivy-secret.tpl'
+        output: 'trivy-results.md'
+
+    - name: Display Trivy Results
+      if: always()
+      shell: bash
+      run: cat trivy-results.md
+
+    - name: Post PR Comment
+      if: always() && github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          try {
+            const results = fs.readFileSync('trivy-results.md', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: results
+            });
+          } catch (err) {
+            console.error('Error reading trivy results or posting comment:', err);
+          }
+
+    - name: Cleanup Template and Results
+      if: always()
+      shell: bash
+      run: |
+        rm -f .trivy-secret.tpl
+        rm -f trivy-results.md
