@@ -36,6 +36,9 @@ on:
 jobs:
   secret-scan:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write # Required to post comments on PRs
+      contents: read
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
