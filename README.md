@@ -12,7 +12,7 @@ By integrating secret scanning directly into the CI/CD pipeline, we ensure that:
 ## How this helps
 
 ### 👩‍💻 For Developers
--   **Immediate Feedback**: You get instant notification if you accidentally commit a secret
+-   **Immediate Feedback**: You get instant notification if you accidentally commit a secret.
 -   **Clear Visibility**: The action posts a comment on your PR with a table showing exactly **what** was found and **where** (file and line number).
 -   **Actionable**: It tells you the severity (e.g., `CRITICAL`, `HIGH`), so you know what needs immediate attention (revocation and removal).
 
